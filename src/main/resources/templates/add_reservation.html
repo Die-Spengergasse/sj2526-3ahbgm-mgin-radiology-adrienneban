@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Reservation</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/patient/list">Patients</a>
+        <a href="/device/list">Devices</a>
+        <a href="/reservation/list">Reservations</a>
+    </nav>
+</header>
+<div class="container">
+    <h1>Add Reservation</h1>
+    <form th:action="@{/reservation/add}" th:object="${reservation}" method="post">
+        <label for="patient">Patient</label>
+        <select id="patient" th:field="*{patient}">
+            <option value="" disabled selected>-- Select Patient --</option>
+            <option th:each="p : ${patients}"
+                    th:value="${p.id}"
+                    th:text="${p.name + ' ' + p.surname}">
+            </option>
+        </select>
+
+        <label for="device">Device</label>
+        <select id="device" th:field="*{device}">
+            <option value="" disabled selected>-- Select Device --</option>
+            <option th:each="d : ${devices}"
+                    th:value="${d.id}"
+                    th:text="${d.type + ' (' + d.location + ')'}">
+            </option>
+        </select>
+
+        <label for="region">Region</label>
+        <select id="region" name="region">
+            <option value="Head">Head</option>
+            <option value="Chest">Chest</option>
+            <option value="Abdomen">Abdomen</option>
+            <option value="Pelvis">Pelvis</option>
+            <option value="Spine">Spine</option>
+            <option value="Extremities">Extremities</option>
+        </select>
+
+        <label for="startTime">Reservation Begin</label>
+        <input type="datetime-local" id="startTime" th:field="*{startTime}">
+
+        <label for="endTime">Reservation End</label>
+        <input type="datetime-local" id="endTime" th:field="*{endTime}">
+
+        <label for="comment">Comment</label>
+        <input type="text" id="comment" th:field="*{comment}" placeholder="Additional notes">
+
+        <div class="page-actions">
+            <input type="submit" value="Save">
+            <a href="/reservation/list" class="btn btn-secondary">← Back</a>
+            <a href="/" class="btn btn-secondary">🏠 Home</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

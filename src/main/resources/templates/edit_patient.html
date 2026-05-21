@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Patient</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/patient/list">Patients</a>
+        <a href="/device/list">Devices</a>
+        <a href="/reservation/list">Reservations</a>
+    </nav>
+</header>
+<div class="container">
+    <h1>Edit Patient</h1>
+    <form th:action="@{/patient/edit/{id}(id=${patient.id})}" th:object="${patient}" method="post">
+        <label>Social Security Number</label>
+        <input type="text" th:field="*{ssn}" placeholder="SSN">
+
+        <label>Name</label>
+        <input type="text" th:field="*{name}" placeholder="Name">
+
+        <label>Surname</label>
+        <input type="text" th:field="*{surname}" placeholder="Surname">
+
+        <label>Gender</label>
+        <div class="radio-group">
+            <input type="radio" id="genderF" name="gender" value="f">
+            <label for="genderF">Female</label>
+            <input type="radio" id="genderM" name="gender" value="m">
+            <label for="genderM">Male</label>
+            <input type="radio" id="genderO" name="gender" value="o">
+            <label for="genderO">Other</label>
+        </div>
+
+        <label>Birth Date</label>
+        <input type="date" th:field="*{birth}">
+
+        <div class="page-actions">
+            <input type="submit" value="Save">
+            <a href="/patient/list" class="btn btn-secondary">← Back</a>
+            <a href="/" class="btn btn-secondary">🏠 Home</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

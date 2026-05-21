@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Datenbankfehler</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/patient/list">Patients</a>
+        <a href="/device/list">Devices</a>
+        <a href="/reservation/list">Reservations</a>
+    </nav>
+</header>
+<div class="container">
+    <h1>⚠️ Database Error</h1>
+
+    <div class="error-box">
+        <p th:text="${errorMessage}">The database is currently unavailible.</p>
+        <p>Please make sure MySQL is running and the connection details in <code>application.properties</code> are correct.</p>
+    </div>
+
+    <details style="margin-top: 1rem;">
+        <summary style="cursor:pointer; color: #888;">Show technical details</summary>
+        <pre style="background:#f4f4f4; padding:0.75rem; border-radius:4px; margin-top:0.5rem; font-size:0.85rem; overflow-x:auto;"
+             th:text="${technicalDetail}">–</pre>
+    </details>
+
+    <div class="page-actions">
+        <a href="/" class="btn">🏠 Home</a>
+    </div>
+</div>
+</body>
+</html>

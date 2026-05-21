@@ -1,16 +1,26 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/html">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Greeting</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <title>Reservation Manager</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+<header>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/patient/list">Patients</a>
+        <a href="/device/list">Devices</a>
+        <a href="/reservation/list">Reservations</a>
+    </nav>
+</header>
 <div class="container">
-    <h1>Hallo</h1>
-    Datum: <span th:text="${today}"></span>
-    <div>
-        <a href="/patient/list">patient list</a>
+    <h1>Welcome to your Reservation Manager</h1>
+    <p>Today's date: <strong><span th:text="${today}"></span></strong></p>
+    <div class="welcome-cards">
+        <a href="/reservation/list" class="btn btn-primary">📋 Reservations</a>
+        <a href="/patient/list" class="btn btn-primary">🧑‍⚕️ Patients</a>
+        <a href="/device/list" class="btn btn-primary">🖥️ Devices</a>
     </div>
 </div>
 </body>

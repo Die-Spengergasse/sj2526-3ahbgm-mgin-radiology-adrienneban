@@ -1,17 +1,113 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/html">
-<head>
-    <meta charset="UTF-8">
-    <title>add new patient</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-</head>
-<body>
+    <!--DOCTYPE html>
+    <html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Add Patient</title>
+        <link rel="stylesheet" href="/style.css">
+    </head>
+    <body>
+    <header>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/patient/list">Patients</a>
+            <a href="/device/list">Devices</a>
+            <a href="/reservation/list">Reservations</a>
+        </nav>
+    </header>
     <div class="container">
+        <h1>Add Patient</h1>
+
+        <div th:if="${error}" style="color:red; margin-bottom:10px;">
+            <p th:text="${error}"></p>
+        </div>
         <form th:action="@{/patient/add}" th:object="${patient}" method="post">
-            <input type="text" th:field="*{name}" class="form-control" placeholder="patient name">
-            birth date <input type="date" th:field="*{birth}" class="form-control">
-            <input type="submit" class="form-control" value="Save">
+            <label>Social Security Number</label>
+            <input type="text" th:field="*{ssn}" placeholder="Social security number">
+            <p th:if="${#fields.hasErrors('ssn')}" th:errors="*{ssn}" style="color:red;"></p>
+
+
+            <label>Name</label>
+            <input type="text" th:field="*{name}" placeholder="Name">
+
+            <label>Surname</label>
+            <input type="text" th:field="*{surname}" placeholder="Surname">
+
+            <label>Gender</label>
+            <div class="radio-group">
+                <input type="radio" id="genderF" name="gender" value="f">
+                <label for="genderF">Female</label>
+                <input type="radio" id="genderM" name="gender" value="m">
+                <label for="genderM">Male</label>
+                <input type="radio" id="genderO" name="gender" value="o">
+                <label for="genderO">Other</label>
+            </div>
+
+            <label>Birth Date</label>
+            <input type="date" th:field="*{birth}">
+
+            <div class="page-actions">
+                <input type="submit" value="Save">
+                <a href="/patient/list" class="btn btn-secondary">← Back</a>
+                <a href="/" class="btn btn-secondary">🏠 Home</a>
+            </div>
         </form>
     </div>
-</body>
-</html>
+    </body>
+    </html-->
+
+
+    <!DOCTYPE html>
+    <html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Add Patient</title>
+        <link rel="stylesheet" href="/style.css">
+    </head>
+    <body>
+    <header>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/patient/list">Patients</a>
+            <a href="/device/list">Devices</a>
+            <a href="/reservation/list">Reservations</a>
+        </nav>
+    </header>
+    <div class="container">
+        <h1>Add Patient</h1>
+
+        <form th:action="@{/patient/add}" th:object="${patient}" method="post">
+
+            <label>Social Security Number</label>
+            <input type="text" th:field="*{ssn}" placeholder="SSN (10 digits)">
+            <p th:if="${#fields.hasErrors('ssn')}" th:errors="*{ssn}" class="field-error"></p>
+
+            <label>Name</label>
+            <input type="text" th:field="*{name}" placeholder="Name">
+
+            <label>Surname</label>
+            <input type="text" th:field="*{surname}" placeholder="Surname">
+
+            <label>Gender</label>
+            <div class="radio-group">
+                <input type="radio" id="genderF" name="gender" value="f">
+                <label for="genderF">Female</label>
+                <input type="radio" id="genderM" name="gender" value="m">
+                <label for="genderM">Male</label>
+                <input type="radio" id="genderO" name="gender" value="o">
+                <label for="genderO">Other</label>
+            </div>
+
+            <label>Birth Date</label>
+            <input type="date" th:field="*{birth}">
+            <p th:if="${#fields.hasErrors('birth')}" th:errors="*{birth}" class="field-error"></p>
+
+            <div class="page-actions">
+                <input type="submit" value="Save">
+                <a href="/patient/list" class="btn btn-secondary">← Back</a>
+                <a href="/" class="btn btn-secondary">🏠 Home</a>
+            </div>
+        </form>
+    </div>
+    </body>
+    </html>
+

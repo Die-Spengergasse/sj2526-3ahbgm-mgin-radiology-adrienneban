@@ -1,31 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Patients List</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <title>Patient List</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+<header>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/patient/list">Patients</a>
+        <a href="/device/list">Devices</a>
+        <a href="/reservation/list">Reservations</a>
+    </nav>
+</header>
 <div class="container">
-    <table class="table">
+    <h1>Patient List</h1>
+    <table>
         <thead>
             <tr>
-                <th>name</th>
-                <th>birth</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Birth Date</th>
+                <th>Social Security Number</th>
+                <th>Gender</th>
+                <th>Edit</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="p : ${patients}">
                 <td th:text="${p.name}"></td>
+                <td th:text="${p.surname}"></td>
                 <td th:text="${p.birth}"></td>
+                <td th:text="${p.ssn}"></td>
+                <td th:text="${p.gender}"></td>
+                <td><a th:href="@{'/patient/edit/' + ${p.id}}" class="btn btn-primary btn-danger" style="background:#f39c12">Edit</a></td>
+                <td>
+                    <form th:action="@{/patient/delete/{id}(id=${p.id})}" method="post">
+                        <input type="submit" value="Delete" class="btn btn-danger" style="background:#e74c3c;color:white;border:none;border-radius:5px;padding:0.3rem 0.75rem;cursor:pointer;">
+                    </form>
+                </td>
             </tr>
         </tbody>
-
     </table>
-
-    <p>
-        <a href="/patient/add">new patient</a>
-    </p>
+    <div class="page-actions">
+        <a href="/patient/add" class="btn btn-primary">+ New Patient</a>
+        <a href="/" class="btn btn-secondary">← Home</a>
+    </div>
 </div>
 </body>
 </html>

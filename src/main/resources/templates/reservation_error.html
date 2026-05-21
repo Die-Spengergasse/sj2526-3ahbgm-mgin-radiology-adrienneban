@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservation Error</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/patient/list">Patients</a>
+        <a href="/device/list">Devices</a>
+        <a href="/reservation/list">Reservations</a>
+    </nav>
+</header>
+<div class="container">
+    <h1>⚠️ Reservation Error</h1>
+
+    <!-- Spezifische Überschneidungs-Fehlermeldung -->
+    <div th:if="${errorMessage}" class="error-box">
+        <p th:text="${errorMessage}"></p>
+    </div>
+
+    <!-- Allgemeiner Validierungsfehler (z.B. Datum in der Vergangenheit) -->
+    <div th:unless="${errorMessage}" class="error-box">
+        <p>Please make sure, all fields are filled out and all reservations are in the future. </p>
+    </div>
+
+    <div class="page-actions">
+        <a href="/reservation/add" class="btn">← Try again</a>
+        <a href="/reservation/list" class="btn btn-secondary">Back to list</a>
+        <a href="/" class="btn btn-secondary">🏠 Home</a>
+    </div>
+</div>
+</body>
+</html>
