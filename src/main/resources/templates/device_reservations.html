@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservations for Device</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        .badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.82em;
+            font-weight: bold;
+        }
+        .badge-upcoming  { background: #d4edda; color: #155724; }
+        .badge-past      { background: #f8d7da; color: #721c24; }
+        .device-info-box {
+            background: #f0f4fa;
+            border-left: 4px solid #2980b9;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0 8px 8px 0;
+        }
+        .device-info-box h2 { margin: 0 0 0.25rem; color: #2980b9; }
+        .device-info-box p  { margin: 0; color: #555; }
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #888;
+        }
+        .empty-state .icon { font-size: 3rem; }
+    </style>
+</head>
+<body>
+<header>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/patient/list">Patients</a>
+        <a href="/device/list">Devices</a>
+        <a href="/reservation/list">Reservations</a>
+    </nav>
+</header>
+<div class="container">
+
+    <!-- Device info header -->
+    <div class="device-info-box">
+        <h2 th:text="${device.type}">Device Type</h2>
+        <p>📍 Location: <strong th:text="${device.location}">Location</strong></p>
+    </div>
+
+    <h1>Reservation List for this Device</h1>
+
+    <!-- Empty state -->
+    <div class="empty-state" th:if="${#lists.isEmpty(reservations)}">
+        <div class="icon">📋</div>
+        <p>No reservations found for this device.</p>
+        <a th:href="@{/reservation/add}" class="btn btn-primary">+ New Reservation</a>
+    </div>
+
+    <!-- Table of reservations -->
+    <table th:if="${!#lists.isEmpty(reservations)}">
+        <thead>
+            <tr>
+                <th>Patient</th>
+                <th>Body Region</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Duration</th>
+                <th>Comment</th>
+                <th>Status</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="r : ${reservations}">
+                <td th:text="${r.patient.name + ' ' + r.patient.surname}">Patient Name</td>
+                <td th:text="${r.bodyRegion}">Region</td>
+                <td th:text="${#temporals.format(r.startTime, 'dd.MM.yyyy HH:mm')}">Start</td>
+                <td th:text="${#temporals.format(r.endTime,   'dd.MM.yyyy HH:mm')}">End</td>
+                <td th:text="${r.getDurationMinutes() + ' min'}">Duration</td>
+                <td th:text="${r.comment}">Comment</td>
+                <td>
+                    <span class="badge"
+                          th:classappend="${r.startTime.isAfter(#temporals.createNow())} ? 'badge-upcoming' : 'badge-past'"
+                          th:text="${r.startTime.isAfter(#temporals.createNow())} ? 'Upcoming' : 'Past'">
+                    </span>
+                </td>
+                <td>
+                    <a th:href="@{'/reservation/edit/' + ${r.id}}"
+                       class="btn"
+                       style="background:#f39c12;color:white;border-radius:5px;padding:0.3rem 0.75rem;text-decoration:none;font-weight:bold;">
+                        Edit
+                    </a>
+                </td>
+                <td>
+                    <form th:action="@{/reservation/delete/{id}(id=${r.id})}" method="post">
+                        <input type="submit" value="Delete"
+                               style="background:#e74c3c;color:white;border:none;border-radius:5px;padding:0.3rem 0.75rem;cursor:pointer;font-weight:bold;">
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="page-actions" th:if="${!#lists.isEmpty(reservations)}">
+        <a th:href="@{/reservation/add}" class="btn btn-primary">+ New Reservation</a>
+        <a th:href="@{/device/list}"     class="btn btn-secondary">← Back to Devices</a>
+        <a href="/"                      class="btn btn-secondary">🏠 Home</a>
+    </div>
+</div>
+</body>
+</html>

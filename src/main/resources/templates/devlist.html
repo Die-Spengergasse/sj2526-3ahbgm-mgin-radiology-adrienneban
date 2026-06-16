@@ -18,24 +18,32 @@
     <h1>Device List</h1>
     <table>
         <thead>
-            <tr>
-                <th>Type</th>
-                <th>Location</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
+        <tr>
+            <th>Type</th>
+            <th>Location</th>
+            <th>Reservations</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
         </thead>
         <tbody>
-            <tr th:each="d : ${devices}">
-                <td th:text="${d.type}"></td>
-                <td th:text="${d.location}"></td>
-                <td><a th:href="@{'/device/edit/' + ${d.id}}" class="btn" style="background:#f39c12;color:white;border-radius:5px;padding:0.3rem 0.75rem;text-decoration:none;font-weight:bold;">Edit</a></td>
-                <td>
-                    <form th:action="@{/device/delete/{id}(id=${d.id})}" method="post">
-                        <input type="submit" value="Delete" style="background:#e74c3c;color:white;border:none;border-radius:5px;padding:0.3rem 0.75rem;cursor:pointer;font-weight:bold;">
-                    </form>
-                </td>
-            </tr>
+        <tr th:each="d : ${devices}">
+            <td th:text="${d.type}"></td>
+            <td th:text="${d.location}"></td>
+            <td>
+                <a th:href="@{'/device/' + ${d.id} + '/reservations'}"
+                   class="btn"
+                   style="background:#2980b9;color:white;border-radius:5px;padding:0.3rem 0.75rem;text-decoration:none;font-weight:bold;">
+                    📋 View
+                </a>
+            </td>
+            <td><a th:href="@{'/device/edit/' + ${d.id}}" class="btn" style="background:#f39c12;color:white;border-radius:5px;padding:0.3rem 0.75rem;text-decoration:none;font-weight:bold;">Edit</a></td>
+            <td>
+                <form th:action="@{/device/delete/{id}(id=${d.id})}" method="post">
+                    <input type="submit" value="Delete" style="background:#e74c3c;color:white;border:none;border-radius:5px;padding:0.3rem 0.75rem;cursor:pointer;font-weight:bold;">
+                </form>
+            </td>
+        </tr>
         </tbody>
     </table>
     <div class="page-actions">

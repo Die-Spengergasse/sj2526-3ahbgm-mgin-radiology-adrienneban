@@ -51,4 +51,13 @@ public class DeviceController {
         deviceRepository.deleteById(id);
         return "redirect:/device/list";
     }
+
+    @GetMapping("/{id}/reservations")
+    public String deviceReservations(@PathVariable int id, Model model) {
+        Device device = deviceRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Device not found: " + id));
+        model.addAttribute("device", device);
+        model.addAttribute("reservations", device.getReservations());
+        return "device_reservations";
+    }
 }
